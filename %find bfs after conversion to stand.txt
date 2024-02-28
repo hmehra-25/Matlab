@@ -1,0 +1,14 @@
+%find bfs after conversion to standard form 
+% <= -->0,>= -->1
+C = [3 5];
+A = [1 2; 1 1; 0 1];
+B = [2000; 1500; 600];
+ineq_sign = [0 0 1];
+S = eye(size(A,1));
+index = find(ineq_sign > 0)
+S(index, :) = -S(index, :); %same index k column updated with - values
+obj_fns = array2table(C)
+obj_fns.Properties.VariableNames(1:size(C,2)) = {'x1','x2'} %column
+H = [A S B];
+constraint = array2table(H)
+constraint.Properties.VariableNames(1:size(H,2)) = {'x1','x2','S1','S2','S3','sol'}
