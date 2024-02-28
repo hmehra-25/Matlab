@@ -1,0 +1,37 @@
+BFS
+
+%algebraic method
+clc
+clear all
+c = [2 3 4 7];
+a = [2 3 -1 4; 1 -2 6 -7];
+b = [8; -3];
+m = size(a, 1); %no of constraints
+n = size(a, 2); %no of variables
+if n>m
+    ncm = nchoosek(n, m);
+    p = nchoosek(1:n, m);
+    sol = [];
+    for i = 1:ncm
+        y = zeros(n, 1);
+        x = a(:, p(i, :)) \ b;
+        if all((x >= 0) & (x~=-inf & x~=inf))
+            y(p(i, :)) = x;
+            sol = [sol y];
+        end
+    end
+else
+    error('no')
+    end
+
+z = c * sol;
+sol
+z
+
+[zmax, index] = max(z);
+bfs = sol(:, index);
+bfs
+optimal = [bfs' zmax];
+optimal_bfs = array2table(optimal);
+optimal_bfs.Properties.VariableNames(1:size(optimal_bfs,2)) = {'x1', 'x2', 'x3', 'x4', 'value of z'};
+optimal_bfs
